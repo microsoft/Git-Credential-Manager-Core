@@ -161,11 +161,7 @@ namespace Microsoft.AzureRepos
                 $"Acquired Azure access token. Account='{result.AccountUpn}' Token='{{0}}'", new object[] {result.AccessToken});
 
             // Ask the Azure DevOps instance to create a new PAT
-            var patScopes = new[]
-            {
-                AzureDevOpsConstants.PersonalAccessTokenScopes.ReposWrite,
-                AzureDevOpsConstants.PersonalAccessTokenScopes.ArtifactsRead
-            };
+            string[] patScopes = GetScopes();
             _context.Trace.WriteLine($"Creating Azure DevOps PAT with scopes '{string.Join(", ", patScopes)}'...");
             string pat = await _azDevOps.CreatePersonalAccessTokenAsync(
                 orgUri,
@@ -174,6 +170,29 @@ namespace Microsoft.AzureRepos
             _context.Trace.WriteLineSecrets("PAT created. PAT='{0}'", new object[] {pat});
 
             return new GitCredential(result.AccountUpn, pat);
+        }
+
+        private string[] GetScopes()
+        {
+            string @namespace;
+            if (_context.Settings.TryGetSetting(
+                    AzureDevOpsConstants.EnvironmentVariables.GcmDevOpsScope,
+                    Constants.GitConfiguration.Credential.SectionName,
+                    AzureDevOpsConstants.GitConfiguration.Credential.DevOpsScope,
+                    out @namespace) 
+                ||
+                _context.Settings.TryGetSetting(
+                    AzureDevOpsConstants.EnvironmentVariables.GcmVstsScope,
+                    Constants.GitConfiguration.Credential.SectionName,
+                    AzureDevOpsConstants.GitConfiguration.Credential.VstsScope,
+                    out @namespace) )
+            {
+                return @namespace.Split(new char[]{' ', ',', ';', '|'}, StringSplitOptions.RemoveEmptyEntries);
+            }
+            else
+            {
+                return AzureDevOpsConstants.PersonalAccessTokenScopes.DefaultScopes;
+            }
         }
 
         private string GetClientId()

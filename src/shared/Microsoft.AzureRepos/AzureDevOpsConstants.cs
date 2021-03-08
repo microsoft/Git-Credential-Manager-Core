@@ -28,6 +28,7 @@ namespace Microsoft.AzureRepos
         {
             public const string ReposWrite = "vso.code_write";
             public const string ArtifactsRead = "vso.packaging";
+            public static readonly string[] DefaultScopes = new string[] {ReposWrite, ArtifactsRead};
         }
 
         public static class EnvironmentVariables
@@ -35,6 +36,8 @@ namespace Microsoft.AzureRepos
             public const string DevAadClientId = "GCM_DEV_AZREPOS_CLIENTID";
             public const string DevAadRedirectUri = "GCM_DEV_AZREPOS_REDIRECTURI";
             public const string DevAadAuthorityBaseUri = "GCM_DEV_AZREPOS_AUTHORITYBASEURI";
+            public const string GcmVstsScope = "GCM_VSTS_SCOPE";
+            public const string GcmDevOpsScope = "GCM_DEVOPS_SCOPE";
         }
 
         public static class GitConfiguration
@@ -44,6 +47,8 @@ namespace Microsoft.AzureRepos
                 public const string DevAadClientId = "azreposDevClientId";
                 public const string DevAadRedirectUri = "azreposDevRedirectUri";
                 public const string DevAadAuthorityBaseUri = "azreposDevAuthorityBaseUri";
+                public const string DevOpsScope = "devopsScope";
+                public const string VstsScope = "vstsScope";
             }
         }
     }

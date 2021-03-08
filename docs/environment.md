@@ -312,6 +312,29 @@ export GCM_GITHUB_AUTHMODES="oauth,basic"
 
 ---
 
+### GCM_VSTS_SCOPE
+
+Overrides GCM default scope request when generating a Personal Access Token from Azure DevOps.
+The supported format is one or more [scope values](https://docs.microsoft.com/en-us/vsts/integrate/get-started/authentication/oauth#scopes) separated by whitespace, commas, semi-colons, or pipe characters (`' '`, `','`, `';'`, `'|'`).
+
+Defaults to `vso.code_write|vso.packaging`; Honored when host is 'visualstudio.com'.
+
+##### Windows
+
+```batch
+SET GCM_VSTS_SCOPE="vso.code_write"
+```
+
+##### macOS/Linux
+
+```bash
+export GCM_VSTS_SCOPE="vso.code_write"
+```
+
+**Also see: [credential.namespace](configuration.md#credentialnamespace)**
+
+---
+
 ### GCM_NAMESPACE
 
 Use a custom namespace prefix for credentials read and written in the OS credential store.

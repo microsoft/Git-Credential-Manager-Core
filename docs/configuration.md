@@ -171,6 +171,21 @@ git config --global credential.gitHubAuthModes "oauth,basic"
 
 ---
 
+### vstsScope
+
+Overrides GCM default scope request when generating a Personal Access Token from Azure DevOps.
+The supported format is one or more [scope values](https://docs.microsoft.com/en-us/vsts/integrate/get-started/authentication/oauth#scopes) separated by whitespace, commas, semi-colons, or pipe `'|'` characters.
+
+Defaults to `vso.code_write|vso.packaging`; Honored when host is 'dev.azure.com'.
+
+```shell
+git config --global credential.microsoft.visualstudio.com.vstsScope vso.code_write|vso.packaging_write|vso.test_write
+```
+
+See [GCM_VSTS_SCOPE](Environment.md#gcm_vsts_scope)
+
+---
+
 ### credential.namespace
 
 Use a custom namespace prefix for credentials read and written in the OS credential store.
